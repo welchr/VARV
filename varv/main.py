@@ -20,7 +20,7 @@
 import os, sys, re, getopt, subprocess, gzip, numpy, time
 import operator, optparse, logging, pprint, signal, shlex
 import pandas
-import pandas.computation.ops
+import pandas.core.computation.ops
 import varv
 from copy import deepcopy
 from varv.util import *
@@ -477,7 +477,7 @@ def main(arg_string=None):
 
 			try:
 				pedfile = pedfile.query(pfilter)
-			except pandas.computation.ops.UndefinedVariableError:
+			except pandas.core.computation.ops.UndefinedVariableError:
 				die("Error: PED file filter specified a variable that does not exist: %s" % pfilter,logger)
 
 			if pedfile is None or pedfile.shape[0] == 0:

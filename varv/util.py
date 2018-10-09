@@ -2,7 +2,7 @@
 import sys, os, subprocess, gzip, signal, pprint, re, base64, shutil, tempfile
 import numpy as np
 import pandas
-import pandas.computation
+import pandas.core.computation
 import varv
 from collections import Counter
 
@@ -580,7 +580,7 @@ def get_header_names(filepath,indices,sep="\t"):
 # 	if annot_filter is not None:
 # 		try:
 # 			df_anno = df_anno.query(annot_filter)
-# 		except pandas.computation.ops.UndefinedVariableError:
+# 		except pandas.core.computation.ops.UndefinedVariableError:
 # 			die("Error: annotation file filter specified variable that does not exist, filter was: %s" % annot_filter,logger)
 #
 # 		if df_anno is None or df_anno.shape[0] == 0:
