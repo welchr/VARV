@@ -415,7 +415,7 @@ def main(arg_string=None):
 
 		logger.info("Running analysis: ")
 		df_opts = pandas.DataFrame([(k,v) for k,v in aopts.iteritems()],columns=["Option","Value"])
-		df_opts.sort("Option",inplace=True)
+		df_opts.sort_values("Option",inplace=True)
 		logger.info(df_opts.to_string(index=False))
 		logger.info("")
 
@@ -679,7 +679,7 @@ def main(arg_string=None):
 		tobed = tobed[~ tobed.duplicated()]
 
 		# Sort (for easier glancing at)
-		tobed.sort(["CHR","START"],inplace=True)
+		tobed.sort_values(["CHR","START"],inplace=True)
 
 		gene_bed = outprefix + '.genes_to_keep.bed'
 		gene_vcf = outprefix + '.genes_to_keep.vcf'
@@ -953,7 +953,7 @@ def main(arg_string=None):
 			if 'BEGIN' not in grp_results.columns:
 				grp_results.rename(columns={'BEG':'BEGIN'}, inplace=True)
 			
-			grp_results = grp_results.sort(['#CHROM','BEGIN'])
+			grp_results = grp_results.sort_values(['#CHROM','BEGIN'])
 
 			# The name of the gene-based test
 			grp_results["TEST"] = grp_test_name
@@ -969,7 +969,7 @@ def main(arg_string=None):
 		# Output dataframe contains concatenated results from all EPACTS tests run
 		# Note in this case, since it's gene based tests, the MARKER_ID is actually the "group" or the gene tested
 		# in the form of chr:start-end_gene
-		all_grp_test_results = all_grp_test_results.sort(["#CHROM",'BEGIN'],inplace=False)
+		all_grp_test_results = all_grp_test_results.sort_values(["#CHROM",'BEGIN'],inplace=False)
 
 		# Make a separate df with only the significant gene based test results
 		all_sig_grp_test_results = all_grp_test_results[all_grp_test_results.PVALUE <= group_pval_threshold]
@@ -992,7 +992,7 @@ def main(arg_string=None):
 		for_sig_marker_bed["POS"] = for_sig_marker_bed.iloc[:,0].map(lambda x: x.split("_")[0].split(":")[1]).astype("int")
 		for_sig_marker_bed["START"] = for_sig_marker_bed["POS"] - 1
 		for_sig_marker_bed["END"] = for_sig_marker_bed["POS"] + 1
-		for_sig_marker_bed.sort(["CHROM","POS"],inplace=True)
+		for_sig_marker_bed.sort_values(["CHROM","POS"],inplace=True)
 
 		sig_genes_bed = outprefix + '.variants_from_sig_genes.txt'
 		marker_names_bed = for_sig_marker_bed["CHROM START END".split()]
@@ -1136,7 +1136,7 @@ def main(arg_string=None):
 				s2 = s1.iloc[:,1:].transpose()
 				s2.columns = s1.MARKER_ID
 				s3 = pandas.merge(ped[pcols],s2,right_index=True,left_on="IND_ID")
-				s3.sort(phenotype,inplace=True)
+				s3.sort_values(phenotype,inplace=True)
 
 				tables.append((gene,s3))
 
